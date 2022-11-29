@@ -5,7 +5,6 @@ import com.example.restaurantservice.entities.Item;
 import com.example.restaurantservice.entities.Restaurant;
 import com.example.restaurantservice.repository.ItemRepository;
 import com.example.restaurantservice.repository.RestaurantRepository;
-import javafx.application.Application;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -49,6 +48,8 @@ public class RestaurantServiceControllerTest {
         assertEquals(foodToGoController.getRestaurants().size(), 1);
         assertEquals(foodToGoController.getRestaurants(), restaurantList);
     }
+
+
 
     @Test
     public void getAllItems() {

@@ -77,7 +77,7 @@ public class FoodToGoController {
     }
 
     @PutMapping("restaurant")
-    Restaurant editRestaurant(@RequestBody Restaurant restaurant) {
+    public Restaurant editRestaurant(@RequestBody Restaurant restaurant) {
         Restaurant restaurant1 = restaurantRepository.findById(restaurant.getId()).get();
         restaurant1.setName(restaurant.getName());
         restaurant1.setPhone(restaurant.getPhone());
