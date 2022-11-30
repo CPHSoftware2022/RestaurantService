@@ -16,7 +16,6 @@ public class RestaurantDTOAssembler extends RepresentationModelAssemblerSupport 
         super(FoodToGoController.class, RestaurantDTO.class);
     }
 
-
     @Override
     public RestaurantDTO toModel(Restaurant entity) {
         RestaurantDTO restaurantDTO = instantiateModel(entity);
@@ -28,4 +27,13 @@ public class RestaurantDTOAssembler extends RepresentationModelAssemblerSupport 
         return restaurantDTO;
     }
 
+    @Override
+    public CollectionModel<RestaurantDTO> toCollectionModel(Iterable<? extends Restaurant> entities)
+    {
+        CollectionModel<RestaurantDTO> customerDTOS = super.toCollectionModel(entities);
+
+        customerDTOS.add(linkTo(methodOn(FoodToGoController.class).getRestaurants()).withSelfRel());
+
+        return customerDTOS;
+    }
 }
