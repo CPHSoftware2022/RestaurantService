@@ -61,6 +61,12 @@ public class FoodToGoController {
         return itemRepository.findAllByRestaurantId(restaurant.getId());
     }
 
+    //get restaurant by id
+    @GetMapping(value = "restaurant/{id}")
+    public Restaurant getRestaurant(@PathVariable Long id) {
+        return restaurantRepository.findById(id).get();
+    }
+
     @GetMapping("items")
     public List<Item> getItems() {
         return itemRepository.findAll();

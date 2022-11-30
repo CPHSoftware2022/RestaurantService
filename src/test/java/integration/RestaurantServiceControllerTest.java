@@ -45,7 +45,7 @@ public class RestaurantServiceControllerTest {
         List<Restaurant> restaurantList = new ArrayList<>();
         restaurantList.add(new Restaurant("Name","6060606060",true));
         when(restaurantRepository.findAll()).thenReturn(restaurantList);
-        assertEquals(foodToGoController.getRestaurants().size(), 1);
+       // assertEquals(foodToGoController.getRestaurants().size(), 1);
         assertEquals(foodToGoController.getRestaurants(), restaurantList);
     }
 
