@@ -3,13 +3,13 @@ package com.example.restaurantservice.assembler;
 import com.example.restaurantservice.controllers.FoodToGoController;
 import com.example.restaurantservice.dto.RestaurantDTO;
 import com.example.restaurantservice.entities.Restaurant;
-import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
-
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+@Component
 public class RestaurantDTOAssembler extends RepresentationModelAssemblerSupport <Restaurant,RestaurantDTO>{
 
     public RestaurantDTOAssembler() {
@@ -30,10 +30,12 @@ public class RestaurantDTOAssembler extends RepresentationModelAssemblerSupport 
     @Override
     public CollectionModel<RestaurantDTO> toCollectionModel(Iterable<? extends Restaurant> entities)
     {
-        CollectionModel<RestaurantDTO> customerDTOS = super.toCollectionModel(entities);
+        System.out.println("toCollectionModel");
+        CollectionModel<RestaurantDTO> restaurantDTOS = super.toCollectionModel(entities);
+        System.out.println(restaurantDTOS);
+        restaurantDTOS.add(linkTo(methodOn(FoodToGoController.class).getRestaurants()).withSelfRel());
+        System.out.println(restaurantDTOS);
 
-        customerDTOS.add(linkTo(methodOn(FoodToGoController.class).getRestaurants()).withSelfRel());
-
-        return customerDTOS;
+        return restaurantDTOS;
     }
 }

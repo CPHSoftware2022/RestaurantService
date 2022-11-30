@@ -3,14 +3,21 @@ package com.example.restaurantservice.controllers;
 // Spring api
 
 
+import com.example.restaurantservice.assembler.RestaurantDTOAssembler;
+import com.example.restaurantservice.dto.RestaurantDTO;
 import com.example.restaurantservice.entities.Item;
 import com.example.restaurantservice.entities.Restaurant;
 import com.example.restaurantservice.repository.ItemRepository;
 import com.example.restaurantservice.repository.RestaurantRepository;
 import com.example.restaurantservice.utils.GenerateData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
@@ -21,6 +28,9 @@ public class FoodToGoController {
 
     @Autowired
     ItemRepository itemRepository;
+
+    @Autowired
+    private RestaurantDTOAssembler restaurantDTOAssembler;
 
     public FoodToGoController() {
     }
@@ -51,8 +61,10 @@ public class FoodToGoController {
     }
 
     @GetMapping("restaurants")
-    public List<Restaurant> getRestaurants() {
-        return restaurantRepository.findAll();
+    public ResponseEntity<CollectionModel<RestaurantDTO>> getRestaurants() {
+        List<Restaurant> restaurantList = (List<Restaurant>) restaurantRepository.findAll();
+        return new ResponseEntity<>(restaurantDTOAssembler.toCollectionModel(restaurantList), HttpStatus.OK);
+
     }
 
     @GetMapping(value = "restaurantItems/{id}")
@@ -63,8 +75,10 @@ public class FoodToGoController {
 
     //get restaurant by id
     @GetMapping(value = "restaurant/{id}")
-    public Restaurant getRestaurant(@PathVariable Long id) {
-        return restaurantRepository.findById(id).get();
+    public ResponseEntity<RestaurantDTO> getRestaurant(@PathVariable Long id) {
+        Restaurant restaurant = restaurantRepository.findById(id).get();
+        System.out.println(restaurantDTOAssembler.toModel(restaurant));
+        return new ResponseEntity<>(restaurantDTOAssembler.toModel(restaurant), HttpStatus.OK);
     }
 
     @GetMapping("items")
