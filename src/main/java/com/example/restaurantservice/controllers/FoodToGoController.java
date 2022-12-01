@@ -3,7 +3,9 @@ package com.example.restaurantservice.controllers;
 // Spring api
 
 
+import com.example.restaurantservice.assembler.ItemDTOAssembler;
 import com.example.restaurantservice.assembler.RestaurantDTOAssembler;
+import com.example.restaurantservice.dto.ItemDTO;
 import com.example.restaurantservice.dto.RestaurantDTO;
 import com.example.restaurantservice.entities.Item;
 import com.example.restaurantservice.entities.Restaurant;
@@ -31,6 +33,9 @@ public class FoodToGoController {
 
     @Autowired
     private RestaurantDTOAssembler restaurantDTOAssembler;
+
+    @Autowired
+    private ItemDTOAssembler itemDTOAssembler;
 
     public FoodToGoController() {
     }
@@ -64,7 +69,6 @@ public class FoodToGoController {
     public ResponseEntity<CollectionModel<RestaurantDTO>> getRestaurants() {
         List<Restaurant> restaurantList = (List<Restaurant>) restaurantRepository.findAll();
         return new ResponseEntity<>(restaurantDTOAssembler.toCollectionModel(restaurantList), HttpStatus.OK);
-
     }
 
     @GetMapping(value = "restaurantItems/{id}")
@@ -82,17 +86,24 @@ public class FoodToGoController {
     }
 
     @GetMapping("items")
-    public List<Item> getItems() {
-        return itemRepository.findAll();
+    public ResponseEntity<CollectionModel<ItemDTO>> getItems() {
+        List<Item> itemList = (List<Item>) itemRepository.findAll();
+        return new ResponseEntity<>(itemDTOAssembler.toCollectionModel(itemList), HttpStatus.OK);
     }
 
     @PostMapping("item")
-    Item addItem(@RequestBody Item item) {
+    public Item addItem(@RequestBody Item item) {
         return itemRepository.save(item);
     }
 
+    @GetMapping("item/{id}")
+    public ResponseEntity<ItemDTO> getItem(@PathVariable Long id) {
+        Item item = itemRepository.findById(id).get();
+        return new ResponseEntity<>(itemDTOAssembler.toModel(item), HttpStatus.OK);
+    }
+
     @PostMapping("restaurant")
-    Restaurant addRestaurant(@RequestBody Restaurant restaurant) {
+    public Restaurant addRestaurant(@RequestBody Restaurant restaurant) {
         return restaurantRepository.save(restaurant);
     }
 
