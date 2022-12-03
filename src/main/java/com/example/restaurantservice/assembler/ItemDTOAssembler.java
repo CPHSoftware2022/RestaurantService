@@ -2,18 +2,11 @@ package com.example.restaurantservice.assembler;
 
 import com.example.restaurantservice.controllers.FoodToGoController;
 import com.example.restaurantservice.dto.ItemDTO;
-import com.example.restaurantservice.dto.RestaurantDTO;
 import com.example.restaurantservice.entities.Item;
-import com.example.restaurantservice.entities.Restaurant;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;
-
-import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.methodOn;
-
 @Component
 public class ItemDTOAssembler  extends RepresentationModelAssemblerSupport<Item, ItemDTO> {
 

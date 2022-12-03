@@ -3,7 +3,6 @@ package com.example.restaurantservice.utils;
 import com.example.restaurantservice.entities.Item;
 import com.example.restaurantservice.entities.Restaurant;
 import com.github.javafaker.Faker;
-
 import java.util.ArrayList;
 import java.util.List;
 

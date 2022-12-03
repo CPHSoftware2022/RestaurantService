@@ -1,8 +1,5 @@
 package com.example.restaurantservice.controllers;
 
-// Spring api
-
-
 import com.example.restaurantservice.assembler.ItemDTOAssembler;
 import com.example.restaurantservice.assembler.RestaurantDTOAssembler;
 import com.example.restaurantservice.dto.ItemDTO;
