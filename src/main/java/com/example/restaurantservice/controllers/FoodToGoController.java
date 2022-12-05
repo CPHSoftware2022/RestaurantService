@@ -6,8 +6,10 @@ import com.example.restaurantservice.dto.ItemDTO;
 import com.example.restaurantservice.dto.RestaurantDTO;
 import com.example.restaurantservice.entities.Item;
 import com.example.restaurantservice.entities.Restaurant;
+import com.example.restaurantservice.model.EventModel;
 import com.example.restaurantservice.repository.ItemRepository;
 import com.example.restaurantservice.repository.RestaurantRepository;
+import com.example.restaurantservice.services.ProducerService;
 import com.example.restaurantservice.utils.GenerateData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -21,6 +23,8 @@ import java.util.List;
 
 @RestController
 public class FoodToGoController {
+    @Autowired
+    private ProducerService service;
 
     @Autowired
     RestaurantRepository restaurantRepository;
@@ -65,7 +69,10 @@ public class FoodToGoController {
     @GetMapping("restaurants")
     public ResponseEntity<CollectionModel<RestaurantDTO>> getRestaurants() {
         List<Restaurant> restaurantList = (List<Restaurant>) restaurantRepository.findAll();
-        return new ResponseEntity<>(restaurantDTOAssembler.toCollectionModel(restaurantList), HttpStatus.OK);
+        ResponseEntity responseEntity= new ResponseEntity<>(restaurantDTOAssembler.toCollectionModel(restaurantList), HttpStatus.OK);
+        EventModel eventModel = new EventModel("GET", responseEntity.getStatusCode(), "RestaurantDTOAssembler{size="+restaurantList.size()+"}");
+        service.sendMessage(eventModel.toString());
+        return responseEntity;
     }
 
     @GetMapping(value = "restaurantItems/{id}")
@@ -78,14 +85,19 @@ public class FoodToGoController {
     @GetMapping(value = "restaurant/{id}")
     public ResponseEntity<RestaurantDTO> getRestaurant(@PathVariable Long id) {
         Restaurant restaurant = restaurantRepository.findById(id).get();
-        System.out.println(restaurantDTOAssembler.toModel(restaurant));
-        return new ResponseEntity<>(restaurantDTOAssembler.toModel(restaurant), HttpStatus.OK);
+        ResponseEntity responseEntity = new ResponseEntity<>(restaurantDTOAssembler.toModel(restaurant), HttpStatus.OK);
+        EventModel eventModel = new EventModel("GET", responseEntity.getStatusCode(), "ItemDTOAssembler{size="+restaurant+"}");
+        service.sendMessage(eventModel.toString());
+        return responseEntity;
     }
 
     @GetMapping("items")
     public ResponseEntity<CollectionModel<ItemDTO>> getItems() {
         List<Item> itemList = (List<Item>) itemRepository.findAll();
-        return new ResponseEntity<>(itemDTOAssembler.toCollectionModel(itemList), HttpStatus.OK);
+        ResponseEntity responseEntity= new ResponseEntity<>(itemDTOAssembler.toCollectionModel(itemList), HttpStatus.OK);
+        EventModel eventModel = new EventModel("GET", responseEntity.getStatusCode(), "ItemDTOAssembler{size="+itemList.size()+"}");
+        service.sendMessage(eventModel.toString());
+        return responseEntity;
     }
 
     @PostMapping("item")
