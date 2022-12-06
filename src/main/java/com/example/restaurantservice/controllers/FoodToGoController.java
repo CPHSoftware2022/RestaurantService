@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -76,9 +75,13 @@ public class FoodToGoController {
     }
 
     @GetMapping(value = "restaurantItems/{id}")
-    List<Item> getRestaurantItems(@PathVariable Long id) {
+    ResponseEntity<CollectionModel<ItemDTO>> getRestaurantItems(@PathVariable Long id) {
         Restaurant restaurant = restaurantRepository.findById(id).get();
-        return itemRepository.findAllByRestaurantId(restaurant.getId());
+        List<Item>items= itemRepository.findAllByRestaurantId(restaurant.getId());
+        ResponseEntity responseEntity= new ResponseEntity<>(itemDTOAssembler.toCollectionModel(items), HttpStatus.OK);
+        EventModel eventModel = new EventModel("GET", responseEntity.getStatusCode(), "Restaurant Item:"+ "{size="+items.size()+"}");
+        service.sendMessage(eventModel.toString());
+        return responseEntity;
     }
 
     //get restaurant by id
@@ -100,15 +103,18 @@ public class FoodToGoController {
         return responseEntity;
     }
 
-    @PostMapping("item")
-    public Item addItem(@RequestBody Item item) {
-        return itemRepository.save(item);
-    }
-
     @GetMapping("item/{id}")
     public ResponseEntity<ItemDTO> getItem(@PathVariable Long id) {
         Item item = itemRepository.findById(id).get();
-        return new ResponseEntity<>(itemDTOAssembler.toModel(item), HttpStatus.OK);
+        ResponseEntity responseEntity= new ResponseEntity<>(itemDTOAssembler.toModel(item) , HttpStatus.OK);
+        EventModel eventModel = new EventModel("GET", responseEntity.getStatusCode(), "Item{size="+item);
+        service.sendMessage(eventModel.toString());
+        return responseEntity;
+    }
+/*
+    @PostMapping("item")
+    public Item addItem(@RequestBody Item item) {
+        return itemRepository.save(item);
     }
 
     @PostMapping("restaurant")
@@ -123,6 +129,6 @@ public class FoodToGoController {
         restaurant1.setPhone(restaurant.getPhone());
         restaurant1.setPartner(restaurant.isPartner());
         return restaurantRepository.save(restaurant1);
-    }
+    }*/
 
 }
