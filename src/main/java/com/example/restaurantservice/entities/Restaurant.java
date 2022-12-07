@@ -19,7 +19,6 @@ public class Restaurant {
 
 
     public Restaurant(String restaurantName, String restaurantPhone, boolean restaurantIsPartner) {
-        System.out.println("Restaurant constructor");
         this.name = restaurantName;
         this.phone = restaurantPhone;
         this.isPartner = restaurantIsPartner;
