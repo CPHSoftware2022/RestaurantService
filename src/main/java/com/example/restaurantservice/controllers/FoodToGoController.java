@@ -94,15 +94,6 @@ public class FoodToGoController {
         return responseEntity;
     }
 
-    @GetMapping("items")
-    public ResponseEntity<CollectionModel<ItemDTO>> getItems() {
-        List<Item> itemList = (List<Item>) itemRepository.findAll();
-        ResponseEntity responseEntity= new ResponseEntity<>(itemDTOAssembler.toCollectionModel(itemList), HttpStatus.OK);
-        EventModel eventModel = new EventModel("GET", responseEntity.getStatusCode(), "ItemDTOAssembler{size="+itemList.size()+"}");
-        service.sendMessage(eventModel.toString());
-        return responseEntity;
-    }
-
     @GetMapping("item/{id}")
     public ResponseEntity<ItemDTO> getItem(@PathVariable Long id) {
         Item item = itemRepository.findById(id).get();
@@ -112,6 +103,16 @@ public class FoodToGoController {
         return responseEntity;
     }
 /*
+
+    @GetMapping("items")
+    public ResponseEntity<CollectionModel<ItemDTO>> getItems() {
+        List<Item> itemList = (List<Item>) itemRepository.findAll();
+        ResponseEntity responseEntity= new ResponseEntity<>(itemDTOAssembler.toCollectionModel(itemList), HttpStatus.OK);
+        EventModel eventModel = new EventModel("GET", responseEntity.getStatusCode(), "ItemDTOAssembler{size="+itemList.size()+"}");
+        service.sendMessage(eventModel.toString());
+        return responseEntity;
+    }
+
     @PostMapping("item")
     public Item addItem(@RequestBody Item item) {
         return itemRepository.save(item);
