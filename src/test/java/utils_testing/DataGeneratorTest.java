@@ -15,14 +15,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
 class DataGeneratorTest {
-    private final RestaurantRepository restaurantRepository = mock(RestaurantRepository.class);
-
-    private final ItemRepository itemRepository = mock(ItemRepository.class);
     private final GenerateData service = new GenerateData();
     Restaurant restaurant = service.generateRestaurant();;
     Item item = service.generateItem(restaurant);;
     List<Restaurant> restaurantList = service.generateRestaurants(10);
     List<Item> itemList = service.generateItems(10, restaurant);
+
     @Test
     void bothCanBeGenerated() {
         assert restaurant != null && item != null;
@@ -47,13 +45,11 @@ class DataGeneratorTest {
 
     @Test
     void rightNumberRestaurentsGetsGenerated() {
-        // Checking if all values are present in restaurant
         assertEquals(restaurantList.size(),10);
     }
 
     @Test
     void rightNumberItemsGetsGenerated() {
-        // Checking if all values are present in restaurant
         assertEquals(itemList.size(),10);
     }
 

@@ -1,3 +1,4 @@
+/*
 package integration;
 import com.example.restaurantservice.controllers.FoodToGoController;
 import com.example.restaurantservice.repository.ItemRepository;
@@ -26,7 +27,8 @@ public class RestaurantServiceControllerTest {
         assertEquals(foodToGoController.test(), "Hello");
     }
 
-   /* @Test
+   */
+/* @Test
     public void getAllRestaurants() {
         FoodToGoController foodToGoController = new FoodToGoController(restaurantRepository, itemRepository);
         List<Restaurant> restaurantList = new ArrayList<>();
@@ -47,7 +49,8 @@ public class RestaurantServiceControllerTest {
         assertEquals(foodToGoController.getItems().getStatusCode(), 200);
         assertEquals(foodToGoController.getItems().hasBody(), true);
 
-    }*/
+    }*//*
 
 
-}
+
+}*/
