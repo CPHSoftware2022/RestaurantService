@@ -54,6 +54,8 @@ jobs:
       #       run: mvn clean install
       #       run: mvn -B package --file ./pom.xml
 
-      - name: Build the Docker image
-        run: docker build . --file ./Dockerfile --tag my-image-name:$(date +%s)
+      #- name: Build the Docker image
+      - name: Build maven project
+        run: mvn clean install
+      #  run: docker build . --file ./Dockerfile --tag my-image-name:$(date +%s)
 
