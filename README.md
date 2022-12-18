@@ -7,8 +7,8 @@
 
 
 # What it contains
-It generates restaurant and items
+It generates restaurant and items.
 
-It then has apis for showing them in the app 
+It then has restfull level 3 apis for showing them in the app.  
 
-It contains 15 tests of different varieties
+It contains 15 tests of different varieties.
