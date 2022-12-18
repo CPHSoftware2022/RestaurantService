@@ -1,5 +1,5 @@
 # RestaurantService
-# This is the service that handles restaurants and items
+## This is the service that handles restaurants and items
 
 # How to run
 1. Setup mySQL on docker
