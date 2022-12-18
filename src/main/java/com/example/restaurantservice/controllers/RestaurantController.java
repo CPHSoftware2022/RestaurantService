@@ -15,13 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class FoodToGoController {
+@CrossOrigin(maxAge = 3600)
+public class RestaurantController {
     @Autowired
     private ProducerService service;
 
@@ -37,10 +39,10 @@ public class FoodToGoController {
     @Autowired
     private ItemDTOAssembler itemDTOAssembler;
 
-    public FoodToGoController() {
+    public RestaurantController() {
     }
 
-    public FoodToGoController(RestaurantRepository repository, ItemRepository itemRepository) {
+    public RestaurantController(RestaurantRepository repository, ItemRepository itemRepository) {
         this.restaurantRepository = repository;
         this.itemRepository= itemRepository;
     }
@@ -53,13 +55,12 @@ public class FoodToGoController {
     @GetMapping("/generateRestaurants")
     List<Restaurant> restaurants() {
         GenerateData generateData = new GenerateData();
-        List<Restaurant> restaurantList= generateData.generateRestaurants(1);
-        for (int i = 0; i < restaurantList.size(); i++) {
-            restaurantRepository.save(restaurantList.get(i));
-            List<Item> itemList = generateData.generateItems(10, restaurantList.get(i));
-            for (int j = 0; j < itemList.size(); j++) {
-                itemRepository.save(itemList.get(j));
-            }
+        List<Restaurant> restaurantList= generateData.generateRestaurants(100);
+        for (Restaurant restaurant : restaurantList) {
+            restaurantRepository.save(restaurant);
+            List<Item> itemList = generateData.generateItems(10, restaurant);
+            //This is so much faster than iterating through the list and saving each item
+            itemRepository.saveAll(itemList);
         }
 
         return restaurantList;

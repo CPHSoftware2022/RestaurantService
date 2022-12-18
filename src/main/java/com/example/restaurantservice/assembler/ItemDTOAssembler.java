@@ -1,6 +1,6 @@
 package com.example.restaurantservice.assembler;
 
-import com.example.restaurantservice.controllers.FoodToGoController;
+import com.example.restaurantservice.controllers.RestaurantController;
 import com.example.restaurantservice.dto.ItemDTO;
 import com.example.restaurantservice.entities.Item;
 import org.springframework.hateoas.CollectionModel;
@@ -21,7 +21,7 @@ public class ItemDTOAssembler  extends RepresentationModelAssemblerSupport<Item,
             itemDTO.setName(entity.getName());
             itemDTO.setPrice(entity.getPrice());
             itemDTO.setRestaurant(entity.getRestaurant());
-            itemDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(FoodToGoController.class).getRestaurant(entity.getId())).withSelfRel());
+            itemDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(RestaurantController.class).getRestaurant(entity.getId())).withSelfRel());
             return itemDTO;
         }
 
@@ -29,7 +29,7 @@ public class ItemDTOAssembler  extends RepresentationModelAssemblerSupport<Item,
     public CollectionModel<ItemDTO> toCollectionModel(Iterable<? extends Item> entities)
     {
         CollectionModel<ItemDTO> itemDTOS = super.toCollectionModel(entities);
-        itemDTOS.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(FoodToGoController.class).getRestaurants()).withSelfRel());
+        itemDTOS.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(RestaurantController.class).getRestaurants()).withSelfRel());
         return itemDTOS;
     }
 

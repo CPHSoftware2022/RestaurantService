@@ -56,8 +56,8 @@ class DataGeneratorTest {
     @Test
     void allItemsGetsGeneratedWithRestaurent() {
         // Checking if all values are present in restaurant
-        for (int i = 0; i < itemList.size(); i++) {
-            assertNotNull(itemList.get(i).getRestaurant());
+        for (Item value : itemList) {
+            assertNotNull(value.getRestaurant());
         }
     }
 }

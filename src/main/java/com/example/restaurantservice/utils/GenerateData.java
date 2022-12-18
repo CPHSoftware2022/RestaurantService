@@ -11,12 +11,17 @@ public class GenerateData {
     //generate data
     private Faker faker = new Faker();
 
+    public String generateFoodCategory() {
+        String[] foodCategories = {"American", "Chinese", "Italian", "Mexican", "Japanese", "Thai", "Indian", "Korean", "Vietnamese", "French", "Greek", "Spanish", "German", "Turkish", "Moroccan", "Middle Eastern", "Cuban", "Brazilian", "Argentinian", "Peruvian", "Colombian", "Caribbean", "African", "Ethiopian", "Egyptian", "Nepalese", "Cambodian", "Laotian", "Hawaiian", "Polish", "Russian", "Ukrainian", "Belarusian", "Czech", "Swedish", "Danish", "Norwegian", "Finnish", "Icelandic", "Irish", "Scottish", "Welsh", "English", "Australian", "New Zealand", "South African", "Afghan", "Bangladeshi", "Burmese", "Indonesian", "Malaysian", "Pakistani", "Singaporean", "Sri Lankan", "Tamil", "Thai", "Vietnamese", "Filipino", "Peruvian", "Colombian", "Caribbean", "African", "Ethiopian", "Egyptian", "Nepalese", "Cambodian", "Laotian", "Hawaiian", "Polish", "Russian", "Ukrainian", "Belarusian", "Czech", "Swedish", "Danish", "Norwegian", "Finnish", "Icelandic", "Irish", "Scottish", "Welsh", "English", "Australian", "New Zealand", "South African", "Afghan", "Bangladeshi", "Burmese", "Indonesian", "Malaysian", "Pakistani", "Singaporean", "Sri Lankan", "Tamil", "Thai", "Vietnamese", "Filipino"};
+        int randomIndex = (int) (Math.random() * foodCategories.length);
+        return foodCategories[randomIndex];
+    }
 
     public Restaurant generateRestaurant(){
         String restaurantName = faker.company().name();
         String phoneNumber = faker.phoneNumber().cellPhone();
         boolean partner = faker.bool().bool();
-        return new Restaurant( restaurantName, phoneNumber, partner);
+        return new Restaurant( restaurantName, phoneNumber, partner, faker.address().streetAddress(), faker.address().city(), generateFoodCategory());
     }
 
     public List<Restaurant> generateRestaurants(int amount){

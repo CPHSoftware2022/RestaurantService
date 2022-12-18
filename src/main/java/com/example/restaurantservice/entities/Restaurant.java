@@ -14,14 +14,21 @@ public class Restaurant {
     private String name;
     private String phone;
     private boolean isPartner;
+    private String address;
+    private String city;
+    private String category;
+
     @OneToMany(mappedBy = "restaurant")
     private List<Item> itemList;
 
 
-    public Restaurant(String restaurantName, String restaurantPhone, boolean restaurantIsPartner) {
+    public Restaurant(String restaurantName, String restaurantPhone, boolean restaurantIsPartner , String restaurantAddress, String restaurantCity, String restaurantCategory) {
         this.name = restaurantName;
         this.phone = restaurantPhone;
         this.isPartner = restaurantIsPartner;
+        this.address = restaurantAddress;
+        this.city = restaurantCity;
+        this.category = restaurantCategory;
         this.itemList = new ArrayList<>();
     }
 
@@ -34,6 +41,31 @@ public class Restaurant {
         this.name = restaurant1;
         this.phone = address1;
         this.itemList = itemList;
+
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public Long getId() {
