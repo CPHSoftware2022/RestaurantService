@@ -11,4 +11,6 @@ It generates restaurant and items.
 
 It then has restfull level 3 apis for showing them in the app.  
 
+It is connected to a kafka consumer that handles logging og interactions with the API
+
 It contains 15 tests of different varieties.
