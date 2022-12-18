@@ -7,5 +7,6 @@
 
 
 # A little about it
-## It generates restaurant and items
-## It then has apis for showing them in the app 
+It generates restaurant and items
+
+It then has apis for showing them in the app 
