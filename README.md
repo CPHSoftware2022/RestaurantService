@@ -6,7 +6,7 @@
 2. Start the project
 
 
-# A little about it
+# What it contains
 It generates restaurant and items
 
 It then has apis for showing them in the app 
