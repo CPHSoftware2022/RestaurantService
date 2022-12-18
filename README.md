@@ -10,3 +10,5 @@
 It generates restaurant and items
 
 It then has apis for showing them in the app 
+
+It contains 15 tests of different varieties
