@@ -25,7 +25,7 @@ Normal API's
 - http://localhost:8100/restaurantItems/{id} - Gets all items from a specific restaurant
 
 
-It is connected to a kafka consumer that handles logging og interactions with the API
+Service is connected to a kafka consumer that handles logging og interactions with the API's
 
 It contains 15 tests of different varieties.
 - unit
