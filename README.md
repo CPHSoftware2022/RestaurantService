@@ -16,13 +16,13 @@ Generates restaurants and items: http://localhost:8100/generateRestaurants
 
 Normal API's
 
-- http://localhost:8100/restaurants
+- http://localhost:8100/restaurants - Gets all restaurants
 
-- http://localhost:8100/restaurant/{id}
+- http://localhost:8100/restaurant/{id} - Gets restaurant by ID
 
-- http://localhost:8100/item/{id}
+- http://localhost:8100/item/{id} - Gets Item by ID
 
-- http://localhost:8100/restaurantItems/{id}
+- http://localhost:8100/restaurantItems/{id} - Gets all items from a specific restaurant
 
 
 It is connected to a kafka consumer that handles logging og interactions with the API
