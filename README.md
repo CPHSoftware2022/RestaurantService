@@ -24,6 +24,7 @@ Normal API's
 
 - http://localhost:8100/restaurantItems/{id} - Gets all items from a specific restaurant
 
+- http://localhost:8100/restaurants2 - Redis Cached version that does not work with restful 3
 
 Service is connected to a kafka consumer that handles logging og interactions with the API's
 
