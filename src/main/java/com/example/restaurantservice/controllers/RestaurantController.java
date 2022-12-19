@@ -72,7 +72,7 @@ public class RestaurantController {
         List<Restaurant> restaurantList = (List<Restaurant>) restaurantRepository.findAll();
         ResponseEntity<CollectionModel<RestaurantDTO>> responseEntity= new ResponseEntity<>(restaurantDTOAssembler.toCollectionModel(restaurantList), HttpStatus.OK);
         EventModel eventModel = new EventModel("GET", responseEntity.getStatusCode(), "RestaurantDTOAssembler{size="+restaurantList.size()+"}");
-        //service.sendMessage(eventModel.toString());
+        service.sendMessage(eventModel.toString());
         return responseEntity;
     }
 
