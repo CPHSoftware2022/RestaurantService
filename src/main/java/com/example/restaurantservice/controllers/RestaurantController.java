@@ -12,6 +12,7 @@ import com.example.restaurantservice.repository.RestaurantRepository;
 import com.example.restaurantservice.services.ProducerService;
 import com.example.restaurantservice.utils.GenerateData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,17 +70,25 @@ public class RestaurantController {
     @GetMapping("restaurants")
     public ResponseEntity<CollectionModel<RestaurantDTO>> getRestaurants() {
         List<Restaurant> restaurantList = (List<Restaurant>) restaurantRepository.findAll();
-        ResponseEntity responseEntity= new ResponseEntity<>(restaurantDTOAssembler.toCollectionModel(restaurantList), HttpStatus.OK);
+        ResponseEntity<CollectionModel<RestaurantDTO>> responseEntity= new ResponseEntity<>(restaurantDTOAssembler.toCollectionModel(restaurantList), HttpStatus.OK);
         EventModel eventModel = new EventModel("GET", responseEntity.getStatusCode(), "RestaurantDTOAssembler{size="+restaurantList.size()+"}");
-        service.sendMessage(eventModel.toString());
+        //service.sendMessage(eventModel.toString());
         return responseEntity;
+    }
+
+    //Problem with Response entity format makes it not cacheable but thought I would keep this in anyway to show my attempt at caching the response
+    @GetMapping("restaurants2")
+    @Cacheable(value = "restaurants")
+    public List<Restaurant> cachedGetAll() {
+        List<Restaurant> restaurantList = (List<Restaurant>) restaurantRepository.findAll();
+        return restaurantList;
     }
 
     @GetMapping(value = "restaurantItems/{id}")
     ResponseEntity<CollectionModel<ItemDTO>> getRestaurantItems(@PathVariable Long id) {
         Restaurant restaurant = restaurantRepository.findById(id).get();
         List<Item>items= itemRepository.findAllByRestaurantId(restaurant.getId());
-        ResponseEntity responseEntity= new ResponseEntity<>(itemDTOAssembler.toCollectionModel(items), HttpStatus.OK);
+        ResponseEntity<CollectionModel<ItemDTO>> responseEntity= new ResponseEntity<>(itemDTOAssembler.toCollectionModel(items), HttpStatus.OK);
         EventModel eventModel = new EventModel("GET", responseEntity.getStatusCode(), "Restaurant Item:"+ "{size="+items.size()+"}");
         service.sendMessage(eventModel.toString());
         return responseEntity;
@@ -89,7 +98,7 @@ public class RestaurantController {
     @GetMapping(value = "restaurant/{id}")
     public ResponseEntity<RestaurantDTO> getRestaurant(@PathVariable Long id) {
         Restaurant restaurant = restaurantRepository.findById(id).get();
-        ResponseEntity responseEntity = new ResponseEntity<>(restaurantDTOAssembler.toModel(restaurant), HttpStatus.OK);
+        ResponseEntity<RestaurantDTO> responseEntity = new ResponseEntity<>(restaurantDTOAssembler.toModel(restaurant), HttpStatus.OK);
         EventModel eventModel = new EventModel("GET", responseEntity.getStatusCode(), "ItemDTOAssembler{size="+restaurant+"}");
         service.sendMessage(eventModel.toString());
         return responseEntity;
@@ -98,7 +107,7 @@ public class RestaurantController {
     @GetMapping("item/{id}")
     public ResponseEntity<ItemDTO> getItem(@PathVariable Long id) {
         Item item = itemRepository.findById(id).get();
-        ResponseEntity responseEntity= new ResponseEntity<>(itemDTOAssembler.toModel(item) , HttpStatus.OK);
+        ResponseEntity<ItemDTO> responseEntity= new ResponseEntity<>(itemDTOAssembler.toModel(item) , HttpStatus.OK);
         EventModel eventModel = new EventModel("GET", responseEntity.getStatusCode(), "Item{size="+item);
         service.sendMessage(eventModel.toString());
         return responseEntity;
