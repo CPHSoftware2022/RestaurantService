@@ -11,15 +11,16 @@ public class ProducerService
 {
     private static final String TOPIC = "restaurant-topic";
     private static Logger logger = LoggerFactory.getLogger(ProducerService.class);
-
     @Autowired
     // Ignore the compiler's warning
     private KafkaTemplate<String, String> template;
 
-    public void sendMessage(String message)
-    {
-        template.send(TOPIC, message);
-        logger.info("### Producer sends message [{}]", message);
-        template.flush();
+    public void sendMessage(String message) {
+        boolean disable = true;
+        if (!disable) {
+            template.send(TOPIC, message);
+            logger.info("### Producer sends message [{}]", message);
+            template.flush();
+        }
     }
 }

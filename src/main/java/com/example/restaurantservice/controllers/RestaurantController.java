@@ -68,6 +68,7 @@ public class RestaurantController {
     }
 
     @GetMapping("restaurants")
+    @Cacheable(value = "restaurants")
     public ResponseEntity<CollectionModel<RestaurantDTO>> getRestaurants() {
         List<Restaurant> restaurantList = (List<Restaurant>) restaurantRepository.findAll();
         ResponseEntity<CollectionModel<RestaurantDTO>> responseEntity= new ResponseEntity<>(restaurantDTOAssembler.toCollectionModel(restaurantList), HttpStatus.OK);

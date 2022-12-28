@@ -6,11 +6,14 @@ import com.example.restaurantservice.entities.Restaurant;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
+
+import java.io.Serializable;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
-public class RestaurantDTOAssembler extends RepresentationModelAssemblerSupport <Restaurant,RestaurantDTO>{
+public class RestaurantDTOAssembler extends RepresentationModelAssemblerSupport <Restaurant,RestaurantDTO> implements Serializable {
 
     public RestaurantDTOAssembler() {
         super(RestaurantController.class, RestaurantDTO.class);
