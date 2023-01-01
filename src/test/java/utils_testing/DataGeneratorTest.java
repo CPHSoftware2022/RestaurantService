@@ -37,7 +37,7 @@ class DataGeneratorTest {
     @Test
     void allValuesArePresentInRestaurant() {
         // Checking if all values are present in restaurant
-        assert restaurant.getName() == null;
+        assert restaurant.getName() != null;
         assert restaurant.getPhone()!=null;
         assertNotNull(restaurant.isPartner());
 
